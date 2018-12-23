@@ -24,7 +24,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'statement/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -56,7 +56,7 @@ $config = [
     ],
     'container' => [
         'definitions' => [
-            'app\components\Parser' => ['class' => 'app\components\DOMDocumentParser'],
+            'app\components\StatementParser' => ['class' => 'app\components\DOMDocumentStatementParser'],
         ],
     ],
     'params' => $params,

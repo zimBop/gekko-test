@@ -2,6 +2,6 @@
 
 namespace app\components;
 
-interface Parser {
+interface StatementParser {
     public function getTransactions(string $html): array;
 }

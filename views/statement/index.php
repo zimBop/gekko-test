@@ -16,7 +16,7 @@ $this->registerJsFile('@web/js/statement.js', ['depends' => 'yii\web\YiiAsset', 
 $this->registerJsFile('https://www.gstatic.com/charts/loader.js', ['position' => yii\web\View::POS_END]);
 
 $form = ActiveForm::begin(
-    ['action' => 'store'],
+    ['action' => 'statement/store'],
     ['options' => ['enctype' => 'multipart/form-data']]
 );
 echo $form->field($model, 'statement')->widget(FileInput::classname(), [

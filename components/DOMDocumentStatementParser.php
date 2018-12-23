@@ -2,9 +2,9 @@
 
 namespace app\components;
 
-use \app\components\Parser;
+use \app\components\StatementParser;
 
-class DOMDocumentParser implements Parser
+class DOMDocumentStatementParser implements StatementParser
 {
     
     public function getTransactions(string $html): array
@@ -18,19 +18,23 @@ class DOMDocumentParser implements Parser
         foreach ($rows as $row) {
             $cells = $row->getElementsByTagName('td');
             $operationTypeTd = $cells->item(2);
-            if ($operationTypeTd === null 
+            if ($operationTypeTd === null
                     || $operationTypeTd->nodeValue !== 'buy') {
                 continue;
             }
            
-            $profit += floatval($row->lastChild->nodeValue);
             date_default_timezone_set('UTC');
+            $dateTime = \DateTime::createFromFormat('Y.m.d H:i:s', $cells->item(1)->nodeValue);
+            if ($dateTime === false) {
+                continue;
+            }
+            $profit += floatval($row->lastChild->nodeValue);
             $result[] = [
-               'time' => \DateTime::createFromFormat('Y.m.d H:i:s', $cells->item(1)->nodeValue)
-                    ->format(\DateTime::ATOM),
+               'time' => $dateTime->format(\DateTime::ATOM),
                'profit' => $profit
             ];
         }
+        
         return $result;
     }
 

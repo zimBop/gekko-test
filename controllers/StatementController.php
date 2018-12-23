@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use Yii;
-use app\components\Parser;
+use app\components\StatementParser;
 use yii\web\UploadedFile;
 use yii\web\Response;
 use yii\data\ActiveDataProvider;
@@ -16,7 +16,7 @@ class StatementController extends \yii\web\Controller
 {
     protected $parser;
 
-    public function __construct($id, $module, Parser $parser, $config = [])
+    public function __construct($id, $module, StatementParser $parser, $config = [])
     {
         $this->parser = $parser;
         parent::__construct($id, $module, $config);
