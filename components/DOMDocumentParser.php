@@ -24,8 +24,10 @@ class DOMDocumentParser implements Parser
             }
            
             $profit += floatval($row->lastChild->nodeValue);
+            date_default_timezone_set('UTC');
             $result[] = [
-               'time' => $cells->item(1)->nodeValue,
+               'time' => \DateTime::createFromFormat('Y.m.d H:i:s', $cells->item(1)->nodeValue)
+                    ->format(\DateTime::ATOM),
                'profit' => $profit
             ];
         }

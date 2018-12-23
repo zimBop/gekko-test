@@ -13,6 +13,7 @@ use yii\helpers\Url;
 $this->title = 'Statements';
 
 $this->registerJsFile('@web/js/statement.js', ['depends' => 'yii\web\YiiAsset', 'position' => yii\web\View::POS_END]);
+$this->registerJsFile('https://www.gstatic.com/charts/loader.js', ['position' => yii\web\View::POS_END]);
 
 $form = ActiveForm::begin(
     ['action' => 'store'],
@@ -20,12 +21,17 @@ $form = ActiveForm::begin(
 );
 echo $form->field($model, 'statement')->widget(FileInput::classname(), [
     'options' => ['accept' => '.html'],
-]);
+    'pluginOptions' => [
+        'showPreview' => false,
+        'msgPlaceholder' => 'Select statement document...'
+    ]
+])->label('');
 
 ActiveForm::end();
 
-echo '<div class="text-center"></div>';
-
+?>
+<div class="text-center h4 margin-top">Statements list</div>
+<?php
 echo GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
@@ -51,3 +57,23 @@ echo GridView::widget([
         ]
     ],
 ]);
+?>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+            Drag to zoom <br>
+            Mouse right click to reset zoom
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="chart"></div>
+      </div>
+    </div>
+  </div>
+</div>

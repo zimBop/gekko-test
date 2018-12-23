@@ -304,3 +304,21 @@ a.desc:after {
     } 
 }
 /*end preloader*/
+
+.margin-top {
+    margin-top: 50px;
+}
+
+.modal-dialog {
+  width: 80%;
+  height: 100%;
+}
+
+.modal-content {
+  height: 90%;
+}
+
+.modal-body {
+    min-height: calc(100% - 100px);
+    overflow-y: auto;
+}
