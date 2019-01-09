@@ -34,7 +34,7 @@ function prepareDate(data) {
     window.transactions = $.map(rawData, function(transaction, key) {
         return [[ new Date(transaction.time), parseFloat(transaction.profit) ]];
     });
-    
+
     return window.transactions;
 }
 
@@ -69,7 +69,14 @@ function drawChart(transactions) {
             explorer : {
                 actions: ['dragToZoom', 'rightClickToReset'],
             },
-          };
+            vAxis: {
+                viewWindowMode:'explicit',
+                viewWindow: {
+                    max: chartData.getColumnRange(1).max + 50,
+                    min: chartData.getColumnRange(1).min - 50
+                }
+            }
+        };
         chart.draw(chartData, options);
     });
     $('#modal').on('hide.bs.modal', function (e) {

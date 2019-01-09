@@ -19,7 +19,7 @@ class DOMDocumentStatementParser implements StatementParser
             $cells = $row->getElementsByTagName('td');
             $operationTypeTd = $cells->item(2);
             if ($operationTypeTd === null
-                    || $operationTypeTd->nodeValue !== 'buy') {
+                    || !in_array($operationTypeTd->nodeValue, ['buy', 'balance'])) {
                 continue;
             }
            
@@ -28,7 +28,7 @@ class DOMDocumentStatementParser implements StatementParser
             if ($dateTime === false) {
                 continue;
             }
-            $profit += floatval($row->lastChild->nodeValue);
+            $profit += floatval(str_replace(' ', '', $row->lastChild->nodeValue));
             $result[] = [
                'time' => $dateTime->format(\DateTime::ATOM),
                'profit' => $profit
