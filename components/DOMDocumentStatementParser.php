@@ -19,12 +19,12 @@ class DOMDocumentStatementParser implements StatementParser
             $cells = $row->getElementsByTagName('td');
             $operationTypeTd = $cells->item(2);
             if ($operationTypeTd === null
-                    || !in_array($operationTypeTd->nodeValue, ['buy', 'balance'])) {
+                    || !in_array($operationTypeTd->nodeValue, ['buy', 'balance', 'sell'])) {
                 continue;
             }
            
             date_default_timezone_set('UTC');
-            $dateTime = \DateTime::createFromFormat('Y.m.d H:i:s', $cells->item(1)->nodeValue);
+            $dateTime = $this->makeDateTime($cells->item(1)->nodeValue);
             if ($dateTime === false) {
                 continue;
             }
@@ -34,8 +34,17 @@ class DOMDocumentStatementParser implements StatementParser
                'profit' => $profit
             ];
         }
-        
+
         return $result;
+    }
+    
+    protected function makeDateTime($dateString) {
+        $dateTime = \DateTime::createFromFormat('Y.m.d H:i:s', $dateString);
+        if ($dateTime === false) {
+            $dateTime = \DateTime::createFromFormat('Y.m.d H:i', $dateString);
+        }
+        
+        return $dateTime;
     }
 
 }

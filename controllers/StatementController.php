@@ -22,6 +22,15 @@ class StatementController extends \yii\web\Controller
         parent::__construct($id, $module, $config);
     }
     
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
+    
     public function actionIndex()
     {
         $model = new UploadForm();
